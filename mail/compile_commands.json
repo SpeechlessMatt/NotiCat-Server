@@ -1,0 +1,36 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-I./include",
+      "-c",
+      "-o",
+      "obj/base64_encode.o",
+      "src/base64_encode.cpp"
+    ],
+    "directory": "/home/edbinmatt/noticat/mail",
+    "file": "/home/edbinmatt/noticat/mail/src/base64_encode.cpp",
+    "output": "/home/edbinmatt/noticat/mail/obj/base64_encode.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-I./include",
+      "-c",
+      "-o",
+      "obj/send.o",
+      "src/send.cpp"
+    ],
+    "directory": "/home/edbinmatt/noticat/mail",
+    "file": "/home/edbinmatt/noticat/mail/src/send.cpp",
+    "output": "/home/edbinmatt/noticat/mail/obj/send.o"
+  }
+]

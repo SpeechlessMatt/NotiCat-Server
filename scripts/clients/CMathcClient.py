@@ -1,0 +1,104 @@
+from .catcherbase import BaseClient
+from lxml import etree
+from lxml_html_clean import Cleaner
+import re
+
+class CMathcClient(BaseClient):
+    def __init__(self, username, password, extra) -> None:
+        super().__init__(name="CMathcCatcher", username=username, password=password, extra=extra)
+
+    def fetch(self):
+        self.logger.debug("cmathc client start")
+        resp = self.session.get("https://www.cmathc.org.cn/news/")
+        noti_html = etree.HTML(resp.text)
+        noti_content = noti_html.xpath('//div/ul[@class="newslist ny"]/li')
+
+        results = []
+        for li in noti_content:
+            try:
+                a_tag = li.xpath(".//a")[0]
+
+                # title
+                title = a_tag.xpath("./@title")
+                if not title:
+                    self.logger.debug("The notification has no title")
+                    title = a_tag.xpath("./text()")
+                clean_title = title[0].strip() if title else "未知标题"
+
+                # url
+                raw_href = a_tag.xpath("./@href")[0]
+                full_url = f"https://www.cmathc.org.cn{raw_href}"
+
+                # publish date
+                date_text = li.xpath('.//span/text()')
+                clean_date = date_text[0].strip() if date_text else ""
+
+                results.append(
+                    {"title": clean_title, "url": full_url, "date": clean_date}
+                )
+
+            except Exception as e:
+                self.logger.warning(f"some error occur when analyse notification.{e}")
+                continue
+
+        return results
+
+    def fetch_detail(self, url):
+        body_content = self.session.get(url).text
+        tree = etree.HTML(body_content)
+
+        container = tree.xpath('//div[@class="article_txt"]')
+        if len(container) == 0:
+            return {"html": "<p>内容解析失败</p>", "attachments": []}
+
+        container = container[0]
+
+        cleaner = Cleaner(
+            scripts=True,  # remove <script>
+            javascript=True,  # remove onclick
+            comments=True,  # remove HTML comments
+            style=True,  # remove <style>
+            links=True,  # remove <link>
+            meta=True,  # remove <meta>
+            page_structure=False,  # save div
+            safe_attrs_only=True,  # save attrs like src
+            safe_attrs=set(["src", "href", "title", "width", "height"]),
+        )
+
+        cleaned_node = cleaner.clean_html(container)
+        content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
+
+        base_url = "https://www.cmathc.org.cn"
+        content_html = content_html.replace('src="/', f'src="{base_url}/')
+        content_html = content_html.replace('href="/', f'href="{base_url}/')
+        content_html = content_html.replace("\\r\\n", "").replace("\\n", "")
+        content_html = content_html.replace("\r", "").replace("\n", "")
+        content_html = re.sub(r'>\s+<', '><', content_html)
+        content_html = content_html.strip()
+
+        self.logger.debug(content_html)
+
+        # attachments
+        # attachments = tree.xpath('//div[@class="battch"]/ul/li')
+        #
+        # results = []
+        # for li in attachments:
+        #     try:
+        #         a_tag = li.xpath(".//a")[0]
+        #
+        #         title = a_tag.xpath("./text()")
+        #         clean_title = title[0].strip() if title else "未知标题"
+        #
+        #         # url
+        #         raw_href = a_tag.xpath("./@href")[0]
+        #         full_url = f"http://my.bupt.edu.cn{raw_href}"
+        #
+        #         results.append({"title": clean_title, "url": full_url})
+        #     except Exception as e:
+        #         self.logger.warning(f"some error occur when analyse notification.{e}")
+        #         continue
+        #
+        # return {"html": content_html, "attachments": results}
+
+
+

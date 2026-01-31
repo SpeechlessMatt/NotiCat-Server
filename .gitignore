@@ -1,0 +1,15 @@
+cookies/
+__pycache__/
+
+*.bak
+*.tmp
+*.log
+*.db*
+*.rdb
+
+bin/
+obj/
+out/
+.cache/
+
+noticat
