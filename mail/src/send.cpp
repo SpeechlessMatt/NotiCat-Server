@@ -74,6 +74,21 @@ static const std::unordered_map<std::string, std::string> smtp_server_url_map = 
     {"163", "smtps://smtp.163.com:465"},
     {"126", "smtps://smtp.126.com:465"},
     {"qq", "smtps://smtp.qq.com:465"},
+    {"yeah", "smtps://smtp.yeah.net:465"},
+    {"netease", "smtps://smtp.netease.com:465"},
+    {"sina", "smtps://smtp.sina.com:465"},
+    {"sinaVIP", "smtps://smtp.vip.sina.com:465"},
+    {"aliyun", "smtps://smtp.aliyun.com:465"},
+    {"sohu", "smtps://smtp.sohu.com:465"},
+    {"gmail", "smtps://smtp.gmail.com:465"},
+    {"outlook", "smtps://smtp-mail.outlook.com:587"},
+    {"hotmail", "smtps://smtp-mail.outlook.com:587"},
+    {"yahoo", "smtps://smtp.mail.yahoo.com:465"},
+    {"icloud", "smtps://smtp.mail.me.com:587"},
+    {"qq_enterprise", "smtps://smtp.exmail.qq.com:465"},
+    {"netease_enterprise", "smtps://smtp.qiye.163.com:465"},
+    {"ali_enterprise", "smtps://smtp.mxhichina.com:465"},
+    {"tencent_enterprise_legacy", "smtps://smtp.exmail.qq.com:465"}
 };
 
 int main(int argc, char *argv[]) {
