@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  noticat:
+    build: .
+    image: noticat-server:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - NOTICAT_JWT_SECRET=your_jwt_secret
+      - NOTICAT_SMTP_SERVER=qq
+      - NOTICAT_EMAIL_ACCOUNT=boss@example.com
+      - NOTICAT_EMAIL_AUTHCODE=your_smtp_auth
+    depends_on:
+      - redis
+    volumes:
+      - ./scripts:/app/scripts:ro
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "6379:6379"

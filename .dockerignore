@@ -1,0 +1,19 @@
+# Ignore VCS
+.git
+.gitignore
+
+# Ignore editor/temp files
+*.swp
+*.swo
+*.DS_Store
+
+# Ignore build artifacts
+/bin
+/obj
+/mail/bin
+/mail/obj
+out
+
+# Go build cache
+**/vendor/
+**/*.exe

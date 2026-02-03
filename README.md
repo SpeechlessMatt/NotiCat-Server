@@ -3,7 +3,7 @@
 <div align="center">
 
 ![License](https://img.shields.io/github/license/SpeechlessMatt/NotiCat-Server)
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?logo=go)
+![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)
 ![Python Version](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python)
 ![C++ Version](https://img.shields.io/badge/C++-17+-00599C?logo=c%2B%2B)
 
@@ -65,7 +65,7 @@ graph TB
 
 > **注意**：请确保已安装以下依赖（版本要求可能随项目更新变化）
 
-- **Go** 1.21+ (主框架)
+- **Go** 1.25+ (主框架)
 - **Python** 3.13+ (网页抓取)
 - **C++17** 兼容编译器 (邮件发送)
 - **Redis** (任务队列与缓存)
@@ -229,7 +229,7 @@ python scripts/catcher.py example 用户名 密码 --extra ...
 **开发依赖**：
 
 - **Linux** 环境（推荐 Ubuntu 20.04+ 或其他主流 Linux 发行版）
-- **Go** 1.21+ 
+- **Go** 1.25+ 
 - **Python** 3.13+
 - **Make** 构建工具
 - **libcurl** 4.x+ （C++ 邮件模块依赖）
@@ -296,6 +296,37 @@ go run main.go
 | `tencent_enterprise_legacy` | `smtps://smtp.exmail.qq.com:465` |
 
 使用简称示例：`export NOTICAT_SMTP_SERVER="qq"` 或使用完整 URL：`export NOTICAT_SMTP_SERVER="smtps://smtp.qq.com:465"`
+
+---
+
+## 🐳 使用 Docker 部署（可选）
+
+项目提供基于多阶段构建的 `Dockerfile` 和 `docker-compose.yml`，可以将整个服务（含 C++ 邮件模块与 Python 脚本）打包运行。
+
+快速示例：
+
+构建镜像：
+
+```bash
+# 在项目根目录构建镜像
+docker build -t noticat-server:latest .
+```
+
+使用 docker-compose（包含 Redis）：
+
+```bash
+docker-compose up --build -d
+```
+
+常见调试：
+
+- 查看日志：`docker-compose logs -f noticat`
+- 进入容器：`docker-compose exec noticat /bin/bash`
+
+说明：
+- 镜像在构建阶段会编译 C++ 邮件二进制并构建 Go 可执行文件；如果你的环境需要特殊编译选项，请在 `Dockerfile` 中调整。
+- `docker-compose.yml` 示例会把 `NOTICAT_SMTP_SERVER` 设置为简称（例如 `qq`），也可直接填入完整 SMTP URL。
+
 
 ## 🤝 贡献指南
 
