@@ -1,30 +1,41 @@
 {
-  "name": "NotiCat Server (Main)",
-  "version": "0.1.1",
-  "build_time": "2026-01-29T08:00:00Z",
-  "owner": "edbinmatt",
-  "description": "Notification bridge server",
-  "support_clients": [
-      {
-          "client": "bili",
-          "name": "BiliClient",
-          "url": "https://www.bilibili.com",
-          "description": "可以订阅需要关注的up哦~，在额外信息的URL中填入想要关注的up的动态链接即可",
-          "credentials": [],
-          "extra": [
-              {
-                  "label": "URL",
-                  "api_key": "url"
-              }
-          ]
-      },
-      {
-          "client": "bupt",
-          "name": "BUPTClient",
-          "url": "http://my.bupt.edu.cn",
-          "description": "北邮信息门户校内通知订阅客户端，解决北邮老要等人工发送的问题，借助NotiCat的正则筛选工具，可以轻松关注想要的通知哟",
-          "credentials": ["username", "password"],
-          "extra": []
-      }
-  ]
+    "name": "NotiCat Server (Main)",
+    "version": "0.1.2",
+    "build_time": "2026-02-03T19:16:46+08:00",
+    "owner": "edbinmatt",
+    "description": "Notification bridge server",
+    "support_clients": [
+        {
+            "client": "bili",
+            "name": "BiliClient",
+            "url": "https://www.bilibili.com",
+            "description": "可以订阅需要关注的up哦~，在额外信息的URL中填入想要关注的up的动态链接即可",
+            "credentials": [],
+            "extra": [
+                {
+                    "api_key": "url",
+                    "label": "URL"
+                }
+            ]
+        },
+        {
+            "client": "bupt",
+            "name": "BUPTClient",
+            "url": "http://my.bupt.edu.cn",
+            "description": "北邮信息门户校内通知订阅客户端，解决北邮老要等人工发送的问题，借助NotiCat的正则筛选工具，可以轻松关注想要的通知哟",
+            "credentials": [
+                "username",
+                "password"
+            ],
+            "extra": []
+        },
+        {
+            "client": "saikr",
+            "name": "SaikrClient",
+            "url": "https://www.saikr.com/",
+            "description": "赛氪赛事中心，目前可以抓取赛事中心https://www.saikr.com/contests的第一页赛事哦",
+            "credentials": [],
+            "extra": []
+        }
+    ]
 }

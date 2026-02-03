@@ -2,11 +2,13 @@ from lxml_html_clean import Cleaner
 import re
 from lxml import etree, html
 from urllib.parse import urlparse, parse_qs
-from .catcherbase import BaseClient
+from .base import BaseClient
 
 class BUPTClient(BaseClient):
+    client_id = "bupt"
+    
     def __init__(self, username, password, extra) -> None:
-        super().__init__(name="BUPTCatcher", username=username, password=password, extra=extra)
+        super().__init__(username=username, password=password, extra=extra)
 
     def login(self):
         self.logger.info("Start access my.bupt.edu.cn...")

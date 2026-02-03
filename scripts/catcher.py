@@ -1,9 +1,7 @@
 import json
 import sys
 import argparse
-from clients.BUPTClient import BUPTClient
-from clients.BilibiliClient import BilibiliClient
-from clients.CMathcClient import CMathcClient
+from clients import clients
 import logging
 
 logging.basicConfig(
@@ -32,13 +30,6 @@ def main():
     parser.add_argument("--extra", help="Extra JSON to provide additional API fields without modifying the script")
 
     args = parser.parse_args()
-
-    # defined clients
-    clients = {
-        "bupt": BUPTClient,
-        "bili": BilibiliClient,
-        "cmathc": CMathcClient
-    }
 
     # required args
     if args.client not in clients:

@@ -43,7 +43,7 @@ func StartScheduler() {
 
 func DispatchAllTasks() {
 	var tasks []model.FetchTask
-	if err := global.DB.Find(&tasks); err != nil {
+	if err := global.DB.Find(&tasks).Error; err != nil {
 		log.Printf("[Scheduler] 数据库繁忙: %v", err)
 		return
 	}

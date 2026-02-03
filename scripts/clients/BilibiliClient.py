@@ -1,4 +1,4 @@
-from .catcherbase import BaseClient
+from .base import BaseClient
 import random
 import json
 import base64
@@ -115,8 +115,10 @@ def jsonToResult(data: dict):
     return result
 
 class BilibiliClient(BaseClient):
+    client_id = "bili"
+
     def __init__(self, username, password, extra) -> None:
-        super().__init__(name="BilibiliCatcher", username=username, password=password, extra=extra)
+        super().__init__(username=username, password=password, extra=extra)
 
     def login(self):
         return
