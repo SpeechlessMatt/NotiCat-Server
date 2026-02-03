@@ -1,4 +1,4 @@
-# NotiCat Server
+# 😼 NotiCat Server
 
 <div align="center">
 
