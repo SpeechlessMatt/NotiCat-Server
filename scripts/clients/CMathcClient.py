@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from .base import BaseClient
-from lxml import etree
+from lxml import etree, html
 from lxml_html_clean import Cleaner
 import re
 
@@ -61,7 +61,7 @@ class CMathcClient(BaseClient):
 
     def fetch_detail(self, url):
         body_content = self.session.get(url).text
-        tree = etree.HTML(body_content)
+        tree = html.fromstring(body_content)
 
         container = tree.xpath('//div[@class="article_txt"]')
         if len(container) == 0:
@@ -92,29 +92,4 @@ class CMathcClient(BaseClient):
         content_html = re.sub(r'>\s+<', '><', content_html)
         content_html = content_html.strip()
 
-        self.logger.debug(content_html)
-
-        # attachments
-        # attachments = tree.xpath('//div[@class="battch"]/ul/li')
-        #
-        # results = []
-        # for li in attachments:
-        #     try:
-        #         a_tag = li.xpath(".//a")[0]
-        #
-        #         title = a_tag.xpath("./text()")
-        #         clean_title = title[0].strip() if title else "未知标题"
-        #
-        #         # url
-        #         raw_href = a_tag.xpath("./@href")[0]
-        #         full_url = f"http://my.bupt.edu.cn{raw_href}"
-        #
-        #         results.append({"title": clean_title, "url": full_url})
-        #     except Exception as e:
-        #         self.logger.warning(f"some error occur when analyse notification.{e}")
-        #         continue
-        #
-        # return {"html": content_html, "attachments": results}
-
-
-
+        return {"html": content_html, "attachments": []}

@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.2-blue?style=for-the-badge" alt="version">
-  <img src="https://img.shields.io/badge/build-2026.02.02-green?style=for-the-badge" alt="build">
+  <img src="https://img.shields.io/badge/build-2026.02.04-green?style=for-the-badge" alt="build">
 </p>
 
 <p align="center">
@@ -38,12 +38,20 @@
 - **无需额外配置**：不需要任何额外配置
 - **无需凭证**：不需要登录任何账号
 
+### 🔢 CMathcClient (`cmathc`)
+**大学生数学竞赛网新闻动态抓取**
+
+关注数学竞赛吗？如果关注数学建模竞赛或者大学生数学竞赛都可以订阅哦
+
+- **无需额外配置**：不需要任何额外配置
+- **无需凭证**：不需要登录任何账号
+
 ---
 
 ## 服务信息
 
 - **版本**：`0.1.2`
-- **构建时间**：`2026-02-02`
+- **构建时间**：`2026-02-04`
 - **维护者**：`edbinmatt`
 
 ---

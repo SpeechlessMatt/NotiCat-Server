@@ -63,5 +63,5 @@ func main() {
 		api.GET("/subscription/:id", handler.GetSubDetailHandler)
 	}
 
-	r.Run(":8080")
+	r.Run(":" + global.AppPort)
 }

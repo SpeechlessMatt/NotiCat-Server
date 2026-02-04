@@ -1,7 +1,7 @@
 {
     "name": "NotiCat Server (Main)",
     "version": "0.1.2",
-    "build_time": "2026-02-03T19:16:46+08:00",
+    "build_time": "2026-02-04T18:57:37+08:00",
     "owner": "edbinmatt",
     "description": "Notification bridge server",
     "support_clients": [
@@ -22,7 +22,7 @@
             "client": "bupt",
             "name": "BUPTClient",
             "url": "http://my.bupt.edu.cn",
-            "description": "北邮信息门户校内通知订阅客户端，解决北邮老要等人工发送的问题，借助NotiCat的正则筛选工具，可以轻松关注想要的通知哟",
+            "description": "北邮信息门户校内通知订阅客户端，解决北邮老要等人工发送的问题，借助NotiCat的正则筛选工具，可以轻松关注想要的通知哟~不过如果服务器部署在非北邮内网，该客户端是无法使用的",
             "credentials": [
                 "username",
                 "password"
@@ -34,6 +34,14 @@
             "name": "SaikrClient",
             "url": "https://www.saikr.com/",
             "description": "赛氪赛事中心，目前可以抓取赛事中心https://www.saikr.com/contests的第一页赛事哦",
+            "credentials": [],
+            "extra": []
+        },
+        {
+            "client": "cmathc",
+            "name": "CMathcClient",
+            "url": "https://www.cmathc.org.cn/",
+            "description": "大学生数学竞赛网新闻动态，包括获奖动态和举办竞赛的通知",
             "credentials": [],
             "extra": []
         }

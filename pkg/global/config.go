@@ -18,7 +18,12 @@ func getEnv(key, fallback string) string {
 
 var (
 	JwtSecret  = []byte(getEnv("NOTICAT_JWT_SECRET", "NotiCat"))
+
 	SMTPSERVER = getEnv("NOTICAT_SMTP_SERVER", "163")
 	ACCOUNT    = getEnv("NOTICAT_EMAIL_ACCOUNT", "")
 	AUTHCODE   = getEnv("NOTICAT_EMAIL_AUTHCODE", "")
+
+	RedisAddr = getEnv("REDIS_ADDR", "localhost:6379")
+	AppPort = getEnv("APP_PORT", "8080")
 )
+

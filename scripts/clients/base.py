@@ -156,6 +156,6 @@ class BaseClient(metaclass=ClientMeta):
             self.logger.error(f"Download error: {e}")
             return False
 
-    def fetch_detail(self, url):
+    def fetch_detail(self, url: str):
         self.logger.debug(f"Input url: {url}")
         raise NotImplementedError("fetch detail NotImplementedError")

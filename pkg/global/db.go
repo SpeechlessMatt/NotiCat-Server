@@ -5,13 +5,14 @@ package global
 // Created: 2026-01-21
 
 import (
-	"noticat/internal/model"
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"time"
+	"noticat/internal/model"
 )
 
 func InitInfrastructure() {
@@ -21,7 +22,7 @@ func InitInfrastructure() {
 	if err != nil {
 		panic("无法连接数据库: " + err.Error())
 	}
-	
+
 	// 性能优化：开启 WAL 模式
 	if sqlDB, err := DB.DB(); err == nil {
 		sqlDB.Exec("PRAGMA journal_mode=WAL;")
@@ -32,7 +33,7 @@ func InitInfrastructure() {
 
 	// --- 2. 初始化 Redis ---
 	RDB = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     RedisAddr,
 		Password: "", // 如果没设密码就留空
 		DB:       0,
 	})
@@ -46,4 +47,3 @@ func InitInfrastructure() {
 
 	fmt.Println("🚀 数据库与 Redis 初始化成功！")
 }
-
