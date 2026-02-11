@@ -57,12 +57,6 @@ class BaseClient(metaclass=ClientMeta):
         self.extra = extra
         self.cookie_path = os.path.join(cookie_dir, f"{self.name}_{username}.pkl")
         self.session = requests.Session(impersonate="chrome131")
-        self.session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                "Accept-Language": "zh-CN,zh;q=0.9",
-            }
-        )
 
         self.logger = logging.getLogger(self.name)
 
