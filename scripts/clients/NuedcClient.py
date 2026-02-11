@@ -15,19 +15,17 @@
 from .base import BaseClient
 from lxml import etree, html
 from lxml_html_clean import Cleaner
+import time
 import re
 
-class CMathcClient(BaseClient):
-    client_id = "cmathc"
-
+class NuedcClient(BaseClient):
     def __init__(self, username, password, extra) -> None:
         super().__init__(username=username, password=password, extra=extra)
 
     def fetch(self):
-        self.logger.debug("cmathc client start")
-        resp = self.session.get("https://www.cmathc.org.cn/news/")
+        resp = self.session.get("https://www.nuedc-training.com.cn/index/news/index")
         noti_html = etree.HTML(resp.text)
-        noti_content = noti_html.xpath('//div/ul[@class="newslist ny"]/li')
+        noti_content = noti_html.xpath('//*[@id="newWrap"]/ul/li')
 
         results = []
         for li in noti_content:
@@ -42,15 +40,19 @@ class CMathcClient(BaseClient):
                 clean_title = title[0].strip() if title else "未知标题"
 
                 # url
-                raw_href = a_tag.xpath("./@href")[0]
-                full_url = f"https://www.cmathc.org.cn{raw_href}"
+                href = a_tag.xpath("./@href")[0]
 
                 # publish date
-                date_text = li.xpath('.//span/text()')
-                clean_date = date_text[0].strip() if date_text else ""
+                date = li.xpath('./@data-time')
+                if len(date) != 0:
+                    timestamp = int(date[0])
+                    time_struct = time.localtime(timestamp)
+                    full_date = time.strftime("%Y-%m-%d", time_struct)
+                else:
+                    full_date = "未知日期"
 
                 results.append(
-                    {"title": clean_title, "url": full_url, "date": clean_date}
+                    {"title": clean_title, "url": href, "date": full_date}
                 )
 
             except Exception as e:
@@ -63,7 +65,7 @@ class CMathcClient(BaseClient):
         body_content = self.session.get(url).text
         tree = html.fromstring(body_content)
 
-        container = tree.xpath('//div[@class="article_txt"]')
+        container = tree.xpath('//div[@class="newsMain-content"]')
         if len(container) == 0:
             return {"html": "<p>内容解析失败</p>", "attachments": []}
 
@@ -84,15 +86,27 @@ class CMathcClient(BaseClient):
         cleaned_node = cleaner.clean_html(container)
         content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
 
-        base_url = "https://www.cmathc.org.cn"
-        content_html = content_html.replace('src="/', f'src="{base_url}/')
-        content_html = content_html.replace('href="/', f'href="{base_url}/')
         content_html = content_html.replace("\\r\\n", "").replace("\\n", "")
         content_html = content_html.replace("\r", "").replace("\n", "")
         content_html = re.sub(r'>\s+<', '><', content_html)
         content_html = content_html.strip()
 
-        return {"html": content_html, "attachments": []}
+        # attachments
+        attachments = tree.xpath('//div[@class="bbs-data"]/ul[contains(@class, "bbs-data-list")]/li')
+        
+        results = []
+        for li in attachments:
+            a_tag = li.xpath('.//a')[0]
+
+            title = a_tag.xpath("./text()")
+            clean_title = title[0].strip() if title else "未知标题"
+
+            # url
+            href = a_tag.xpath("./@href")[0]
+
+            results.append({"title": clean_title, "url": href})
+
+        return {"html": content_html, "attachments": results}
     
     def download_file(self, url, save_path, referer=None, max_size=None, is_ensure_auth=False):
         return super().download_file(url, save_path, referer, max_size, is_ensure_auth)

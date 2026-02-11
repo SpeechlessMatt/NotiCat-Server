@@ -164,9 +164,12 @@ class SaikrClient(BaseClient):
 
             # attachments
             results = []
-            for attachment in attachments.keys():
+            for attachment in attachments or {}:
                 title = attachment
                 url = attachments[attachment]
                 results.append({"title": title, "url": url})
 
             return {"html": content_html, "attachments": results}
+
+    def download_file(self, url, save_path, referer=None, max_size=None, is_ensure_auth=False):
+        return super().download_file(url, save_path, referer, max_size, is_ensure_auth)

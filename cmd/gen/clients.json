@@ -40,6 +40,14 @@
           "description": "大学生数学竞赛网新闻动态，包括获奖动态和举办竞赛的通知",
           "credentials": [],
           "extra": []
+      },
+      {
+          "client": "nuedc",
+          "name": "NuedcClient",
+          "url": "https://www.nuedc-training.com.cn",
+          "description": "全国大学生电子设计竞赛培训网有关通知，也就是电赛的有关通知",
+          "credentials": [],
+          "extra": []
       }
   ]
 }

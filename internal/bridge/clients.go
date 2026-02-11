@@ -10,6 +10,7 @@ const (
 	ClientBUPTClient Client = "bupt"
 	ClientSaikrClient Client = "saikr"
 	ClientCMathcClient Client = "cmathc"
+	ClientNuedcClient Client = "nuedc"
 )
 // const register
 
@@ -18,6 +19,7 @@ var SupportedClients = map[Client]bool{
 	ClientBUPTClient: true,
 	ClientSaikrClient: true,
 	ClientCMathcClient: true,
+	ClientNuedcClient: true,
 }
 // map register
 // end register

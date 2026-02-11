@@ -112,8 +112,9 @@ class BaseClient(metaclass=ClientMeta):
         resp.raise_for_status()
         return resp.text
 
-    def download_file(self, url, save_path, referer=None, max_size=None):
-        self._ensure_auth()
+    def download_file(self, url, save_path, referer=None, max_size=None, is_ensure_auth=True):
+        if is_ensure_auth:
+            self._ensure_auth()
         try:
             headers = {}
             if referer:

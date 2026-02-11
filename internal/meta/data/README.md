@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.2-blue?style=for-the-badge" alt="version">
-  <img src="https://img.shields.io/badge/build-2026.02.04-green?style=for-the-badge" alt="build">
+  <img src="https://img.shields.io/badge/build-2026.02.11-green?style=for-the-badge" alt="build">
 </p>
 
 <p align="center">
@@ -46,12 +46,20 @@
 - **无需额外配置**：不需要任何额外配置
 - **无需凭证**：不需要登录任何账号
 
+### 🆚 NuedcClient (`nuedc`)
+**全国大学生电子设计竞赛网相关通知抓取**
+
+虽然学校通知一般会发的，不过如果关注电赛的话可以订阅哦
+
+- **无需额外配置**：不需要任何额外配置
+- **无需凭证**：不需要登录任何账号
+
 ---
 
 ## 服务信息
 
 - **版本**：`0.1.2`
-- **构建时间**：`2026-02-04`
+- **构建时间**：`2026-02-11`
 - **维护者**：`edbinmatt`
 
 ---
