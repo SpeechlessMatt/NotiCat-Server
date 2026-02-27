@@ -294,7 +294,7 @@ func FetchByConfig(client string, credentials string, extra string) (*FetchConte
 	if err != nil {
 		return nil, nil, fmt.Errorf("credentials解析失败: %v", err)
 	}
-	account, _ := creds["account"].(string)
+	account, _ := creds["username"].(string)
 	password, _ := creds["password"].(string)
 
 	// extra
