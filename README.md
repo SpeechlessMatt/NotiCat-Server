@@ -7,7 +7,7 @@
 ![Python Version](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python)
 ![C++ Version](https://img.shields.io/badge/C++-17+-00599C?logo=c%2B%2B)
 
-[NotiCat Android 客户端](https://github.com/SpeechlessMatt/NotiCat-Android) · [问题反馈](https://github.com/SpeechlessMatt/NotiCat-Server/issues)
+[NotiCat Android 客户端](https://github.com/SpeechlessMatt/NotiCat-Android) · [支持的clients](https://github.com/SpeechlessMatt/NotiCat-Server/blob/main/cmd/gen/README.md) · [问题反馈](https://github.com/SpeechlessMatt/NotiCat-Server/issues)
 
 </div>
 
