@@ -1,7 +1,7 @@
 {
     "name": "NotiCat Server (Main)",
     "version": "0.1.2",
-    "build_time": "2026-02-11T19:24:35+08:00",
+    "build_time": "2026-02-27T22:20:22+08:00",
     "owner": "edbinmatt",
     "description": "Notification bridge server",
     "support_clients": [
@@ -9,12 +9,12 @@
             "client": "bili",
             "name": "BiliClient",
             "url": "https://www.bilibili.com",
-            "description": "可以订阅需要关注的up哦~，在额外信息的URL中填入想要关注的up的动态链接即可",
+            "description": "可以订阅需要关注的up哦~，在额外信息的URL中填入想要关注的up的UID即可哦",
             "credentials": [],
             "extra": [
                 {
-                    "api_key": "url",
-                    "label": "URL"
+                    "api_key": "uid",
+                    "label": "UID"
                 }
             ]
         },
@@ -52,6 +52,19 @@
             "description": "全国大学生电子设计竞赛培训网有关通知，也就是电赛的有关通知",
             "credentials": [],
             "extra": []
+        },
+        {
+            "client": "bvf",
+            "name": "BVFClient",
+            "url": "https://www.bv2008.cn/",
+            "description": "志愿北京官网志愿项目爬取，进入https://www.bv2008.cn/app/opp/list.php后选择项目区域、服务类别等筛选条件，选择好之后复制网址到额外信息的URL处即可，不填URL默认不启用筛选，即只抓取主页志愿项目",
+            "credentials": [],
+            "extra": [
+                {
+                    "api_key": "url",
+                    "label": "URL"
+                }
+            ]
         }
     ]
 }

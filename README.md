@@ -106,8 +106,8 @@ make gen
       "credentials": [],
       "extra": [
         {
-          "label": "URL",
-          "api_key": "url"
+          "label": "UID",
+          "api_key": "uid"
         }
       ]
     }

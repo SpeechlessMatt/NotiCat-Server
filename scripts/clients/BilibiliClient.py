@@ -140,31 +140,38 @@ class BilibiliClient(BaseClient):
     def isLogin(self) -> bool:
         return False
 
+    def get_main_page(self):
+        self.logger.debug("get into main page...")
+        self.session.get("https://www.bilibili.com/")
+        self.logger.debug("sleep 2 seconds...")
+        time.sleep(2)
+        self._save_cookies()
+
     def fetch(self):
-        url = self.extra.get('url')
+        if not self._load_cookies:
+            self.get_main_page()
+
+        extra_uid = self.extra.get('uid')
         self.logger.debug(self.extra)
-        if not url:
-            self.logger.error("require 'url' key in extra")
+        if not extra_uid:
+            self.logger.error("require 'uid' key in extra")
             return
 
         headers = {
-            "Referer": url.rstrip('/'),
+            "Referer": f"https://space.bilibili.com/{extra_uid}/dynamic",
             "Origin": "https://space.bilibili.com",
         }
 
         # space and uid
-        pattern = r"^https://space\.bilibili\.com/(\d+)/dynamic/?$"
-        match = re.match(pattern, url)
+        pattern = r"^(\d+)$"
+        match = re.match(pattern, extra_uid)
         if match:
             uid = int(match.group(1))
         else:
-            self.logger.warning(f"error url: cannot support {url}")
+            self.logger.warning(f"error uid: cannot support {uid}")
             return
 
-        self.logger.debug("get into main page...")
-        self.session.get("https://www.bilibili.com/", headers=headers)
-        self.logger.debug("sleep 2 seconds...")
-        time.sleep(2)
+        url = f"https://space.bilibili.com/{uid}/dynamic"
 
         self.logger.debug(f"enter {url}")
         self.session.get(url, headers=headers)
@@ -223,5 +230,18 @@ class BilibiliClient(BaseClient):
         d_str = "&".join(d)
         self.logger.debug(f"payload: {d_str}")
 
-        data = self.session.get(f"https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?{d_str}", headers=headers).json()
-        return jsonToResult(data)
+        counts = 0
+        while counts < 3:
+            counts += 1
+            try:
+                data = self.session.get(f"https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?{d_str}", headers=headers)
+                json_body = data.json()
+
+                return jsonToResult(json_body)
+            except Exception as e:
+                self.logger.warning(f"Exception: {e}")
+                self.logger.debug(f"code: {data.status_code}")
+                self.logger.debug(f"resp: {data.text}")
+
+            time.sleep(30*counts)
+
