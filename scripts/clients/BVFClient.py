@@ -13,10 +13,9 @@
 # limitations under the License.
 
 from .base import BaseClient
-from lxml import etree
-# from lxml import etree, html
-# from lxml_html_clean import Cleaner
-# import re
+from lxml import etree, html
+from lxml_html_clean import Cleaner
+import re
 
 class BVFClient(BaseClient):
     def __init__(self, username, password, extra) -> None:
@@ -52,57 +51,80 @@ class BVFClient(BaseClient):
             else:
                 clean_title = title[0].strip()
 
-            # url
-            # href = a.xpath('./@href')[0]
-            # url = f"https://www.bv2008.cn{href}"
+            # url -- special url for this
+            # this url cannot open
+            # because noticat use title|url to get contentHash
+            # so it is time to break the url rule~
+            try:
+                href = a.xpath('./@href')[0]
+                entrance_url = f"https://www.bv2008.cn{href}"
+
+                get_code_resp = self.session.get(entrance_url)
+                code = etree.HTML(get_code_resp.text).xpath('//*[@id="opp_id"]/@value')[0]
+
+                url = f"bvfclient://{code}"
+            except Exception as e:
+                self.logger.warning(f"get code err: {e}")
+                continue
 
             # date
             date = child_div.xpath('./text()')
             clean_date = date[0].strip() if date else ""
 
             results.append(
-                {"title": clean_title, "url": "https://www.bv2008.cn", "date": clean_date}
+                {"title": clean_title, "url": url, "date": clean_date}
             )
 
         return results
 
     # The BVF use dynamic url
     # But noticat go server use title + url contentHash
-    # Therefore, the remove duplicate logic will fail if pick the url to go server
-    # wait noticat to Version 1.x
-    # maybe it can solve the problem (1.x may damage the original database)
-    # def fetch_detail(self, url: str):
-        # resp = self.session.get(url)
-        # assert resp.status_code == 200, "server error!"
-        #
-        # body_text = resp.text
-        # tree = html.fromstring(body_text)
-        #
-        # # body text
-        # container = tree.xpath('//div[@id="main_body"]')
-        # if len(container) == 0:
-        #     return {"html": "<p>内容解析失败</p>", "attachments": []}
-        #
-        # container = container[0]
-        #
-        # cleaner = Cleaner(
-        #     scripts=True,  # remove <script>
-        #     javascript=True,  # remove onclick
-        #     comments=True,  # remove HTML comments
-        #     style=True,  # remove <style>
-        #     links=True,  # remove <link>
-        #     meta=True,  # remove <meta>
-        #     page_structure=False,  # save div
-        #     safe_attrs_only=True,  # save attrs like src
-        #     safe_attrs=set(["src", "href", "title", "width", "height"]),
-        # )
-        #
-        # cleaned_node = cleaner.clean_html(container)
-        # base_url = "https://www.bv2008.cn"
-        # cleaned_node.make_links_absolute(base_url)
-        #
-        # content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
-        # content_html = re.sub(r'>\s+<', '><', content_html)
-        #
-        # return {"html": content_html, "attachments": []}
+    def fetch_detail(self, url: str):
+        if not url.startswith("bvfclient://"):
+            return
+
+        code = url.replace("bvfclient://", "")
+        query_url = f"https://www.bv2008.cn/app/opp/list.php?tag=&area=0&area2=0&state=2&scope=&obj=&members=&mode=list&time_start=&time_end=&opp_id={code}&name="
+
+        resp = self.session.get(query_url)
+        assert resp.status_code == 200, "server error!"
+
+        html_body = etree.HTML(resp.text)
+        
+        href = html_body.xpath('//div[@class="m10"]/ul[contains(@class, "list1") and contains(@class, "clearfix")]/li[@class="clearfix"]/div[1]/a/@href')[0]
+        url = f"https://www.bv2008.cn{href}"
+
+        resp = self.session.get(url)
+        assert resp.status_code == 200, "server error!"
+
+        body_text = resp.text
+        tree = html.fromstring(body_text)
+
+        # body text
+        container = tree.xpath('//div[@id="main_body"]')
+        if len(container) == 0:
+            return {"html": "<p>内容解析失败</p>", "attachments": []}
+
+        container = container[0]
+
+        cleaner = Cleaner(
+            scripts=True,  # remove <script>
+            javascript=True,  # remove onclick
+            comments=True,  # remove HTML comments
+            style=True,  # remove <style>
+            links=True,  # remove <link>
+            meta=True,  # remove <meta>
+            page_structure=False,  # save div
+            safe_attrs_only=True,  # save attrs like src
+            safe_attrs=set(["src", "href", "title", "width", "height"]),
+        )
+
+        cleaned_node = cleaner.clean_html(container)
+        base_url = "https://www.bv2008.cn"
+        cleaned_node.make_links_absolute(base_url)
+
+        content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
+        content_html = re.sub(r'>\s+<', '><', content_html)
+
+        return {"html": content_html, "attachments": []}
 
