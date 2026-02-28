@@ -13,9 +13,10 @@
 # limitations under the License.
 
 from .base import BaseClient
-from lxml import etree, html
-from lxml_html_clean import Cleaner
-import re
+from lxml import etree
+# from lxml import etree, html
+# from lxml_html_clean import Cleaner
+# import re
 
 class BVFClient(BaseClient):
     def __init__(self, username, password, extra) -> None:
@@ -52,51 +53,56 @@ class BVFClient(BaseClient):
                 clean_title = title[0].strip()
 
             # url
-            href = a.xpath('./@href')[0]
-            url = f"https://www.bv2008.cn{href}"
+            # href = a.xpath('./@href')[0]
+            # url = f"https://www.bv2008.cn{href}"
 
             # date
             date = child_div.xpath('./text()')
             clean_date = date[0].strip() if date else ""
 
             results.append(
-                {"title": clean_title, "url": url, "date": clean_date}
+                {"title": clean_title, "url": "https://www.bv2008.cn", "date": clean_date}
             )
 
         return results
 
-    def fetch_detail(self, url: str):
-        resp = self.session.get(url)
-        assert resp.status_code == 200, "server error!"
-
-        body_text = resp.text
-        tree = html.fromstring(body_text)
-        
-        # body text
-        container = tree.xpath('//div[@id="main_body"]')
-        if len(container) == 0:
-            return {"html": "<p>内容解析失败</p>", "attachments": []}
-
-        container = container[0]
-
-        cleaner = Cleaner(
-            scripts=True,  # remove <script>
-            javascript=True,  # remove onclick
-            comments=True,  # remove HTML comments
-            style=True,  # remove <style>
-            links=True,  # remove <link>
-            meta=True,  # remove <meta>
-            page_structure=False,  # save div
-            safe_attrs_only=True,  # save attrs like src
-            safe_attrs=set(["src", "href", "title", "width", "height"]),
-        )
-
-        cleaned_node = cleaner.clean_html(container)
-        base_url = "https://www.bv2008.cn"
-        cleaned_node.make_links_absolute(base_url)
-
-        content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
-        content_html = re.sub(r'>\s+<', '><', content_html)
-
-        return {"html": content_html, "attachments": []}
+    # The BVF use dynamic url
+    # But noticat go server use title + url contentHash
+    # Therefore, the remove duplicate logic will fail if pick the url to go server
+    # wait noticat to Version 1.x
+    # maybe it can solve the problem (1.x may damage the original database)
+    # def fetch_detail(self, url: str):
+        # resp = self.session.get(url)
+        # assert resp.status_code == 200, "server error!"
+        #
+        # body_text = resp.text
+        # tree = html.fromstring(body_text)
+        #
+        # # body text
+        # container = tree.xpath('//div[@id="main_body"]')
+        # if len(container) == 0:
+        #     return {"html": "<p>内容解析失败</p>", "attachments": []}
+        #
+        # container = container[0]
+        #
+        # cleaner = Cleaner(
+        #     scripts=True,  # remove <script>
+        #     javascript=True,  # remove onclick
+        #     comments=True,  # remove HTML comments
+        #     style=True,  # remove <style>
+        #     links=True,  # remove <link>
+        #     meta=True,  # remove <meta>
+        #     page_structure=False,  # save div
+        #     safe_attrs_only=True,  # save attrs like src
+        #     safe_attrs=set(["src", "href", "title", "width", "height"]),
+        # )
+        #
+        # cleaned_node = cleaner.clean_html(container)
+        # base_url = "https://www.bv2008.cn"
+        # cleaned_node.make_links_absolute(base_url)
+        #
+        # content_html = etree.tostring(cleaned_node, encoding="unicode", method="html")
+        # content_html = re.sub(r'>\s+<', '><', content_html)
+        #
+        # return {"html": content_html, "attachments": []}
 
