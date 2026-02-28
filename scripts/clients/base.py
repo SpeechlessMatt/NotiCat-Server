@@ -14,6 +14,7 @@
 
 from abc import ABCMeta
 from curl_cffi import requests
+import weakref
 import re
 import pickle
 import os
@@ -57,11 +58,16 @@ class BaseClient(metaclass=ClientMeta):
         self.extra = extra
         self.cookie_path = os.path.join(cookie_dir, f"{self.name}_{username}.pkl")
         self.session = requests.Session(impersonate="chrome131")
+        self._finalizer = weakref.finalize(self, self.session.close)
 
         self.logger = logging.getLogger(self.name)
 
         # 确保 cookie 目录存在
         os.makedirs(cookie_dir, exist_ok=True)
+
+    def close(self):
+        # 手动关闭
+        self._finalizer()
 
     def _save_cookies(self):
         if self.session.cookies:
