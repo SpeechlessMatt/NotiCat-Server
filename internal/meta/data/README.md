@@ -1,8 +1,8 @@
 # 🐱 NotiCat Server
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.1.2-blue?style=for-the-badge" alt="version">
-  <img src="https://img.shields.io/badge/build-2026.02.11-green?style=for-the-badge" alt="build">
+  <img src="https://img.shields.io/badge/version-0.1.3-blue?style=for-the-badge" alt="version">
+  <img src="https://img.shields.io/badge/build-2026.02.28-green?style=for-the-badge" alt="build">
 </p>
 
 <p align="center">
@@ -59,15 +59,23 @@
 
 做志愿必备工具，抓取志愿北京的志愿项目，为社会奉献哦
 
-- **需要配置**：订阅时请在「额外信息」中填入筛选后的网址哦（例如 `https://www.bv2008.cn/app/opp/list.php?tag=&area=2464&area2=2516&state=2&scope=&obj=&time_start=&time_end=&name=&members=&mode=list`）,不填URL默认抓取的是主页志愿项目
+- **需要配置**：订阅时请在「额外信息」中填入筛选后的网址哦,不填URL默认抓取的是主页志愿项目
 - **无需凭证**：不需要登录任何账号
+
+### 🎓 CSUClient (`csu`)
+**中南大学校内通知（本科生院）抓取**
+
+抓取校内最新通知，配合正则筛选功能过滤你关心的内容（奖学金、选课、讲座等）。
+
+- **需要凭证**：提供你的学号和密码（中南大学统一认证）
+- **无需额外配置**：订阅时无需填写额外字段
 
 ---
 
 ## 服务信息
 
-- **版本**：`0.1.2`
-- **构建时间**：`2026-02-11`
+- **版本**：`0.1.3`
+- **构建时间**：`2026-02-28`
 - **维护者**：`edbinmatt`
 
 ---

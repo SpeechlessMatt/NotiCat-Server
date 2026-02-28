@@ -1,7 +1,7 @@
 {
     "name": "NotiCat Server (Main)",
-    "version": "0.1.2",
-    "build_time": "2026-02-27T22:20:22+08:00",
+    "version": "0.1.3",
+    "build_time": "2026-02-28T21:45:30+08:00",
     "owner": "edbinmatt",
     "description": "Notification bridge server",
     "support_clients": [
@@ -65,6 +65,17 @@
                     "label": "URL"
                 }
             ]
+        },
+        {
+            "client": "csu",
+            "name": "CSUClient",
+            "url": "https://oa.csu.edu.cn/con/ggtz",
+            "description": "校外用户可以访问的中南大学校内通知，该client是本科生院的校内通知哦~需要账号密码",
+            "credentials": [
+                "username",
+                "password"
+            ],
+            "extra": []
         }
     ]
 }

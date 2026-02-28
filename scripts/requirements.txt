@@ -1,3 +1,4 @@
 curl_cffi
 lxml
 lxml_html_clean
+pycryptodome
