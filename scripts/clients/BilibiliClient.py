@@ -243,5 +243,5 @@ class BilibiliClient(BaseClient):
                 self.logger.debug(f"code: {data.status_code}")
                 self.logger.debug(f"resp: {data.text}")
 
-            time.sleep(30*counts)
+            time.sleep(5*counts)
 
