@@ -1,7 +1,7 @@
 {
     "name": "NotiCat Server (Main)",
     "version": "0.2.1",
-    "build_time": "2026-03-01T12:57:10+08:00",
+    "build_time": "2026-03-01T13:16:44+08:00",
     "owner": "edbinmatt",
     "description": "Notification bridge server",
     "support_clients": [
@@ -14,7 +14,6 @@
             "extra": [
                 {
                     "api_key": "uid",
-                    "desc": "填入B站up主的UID，进去个人主页然后就可以找到了",
                     "label": "UID"
                 }
             ]
@@ -63,7 +62,6 @@
             "extra": [
                 {
                     "api_key": "url",
-                    "desc": "填入网址，例如https://www.bv2008.cn/app/opp/list.php?tag=\u0026area=2464\u0026area2=2516\u0026state=2\u0026scope=\u0026obj=\u0026time_start=\u0026time_end=\u0026name=\u0026members=\u0026mode=list（这是一个选了沙河地区筛选条件的例子）",
                     "label": "URL"
                 }
             ]

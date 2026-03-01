@@ -13,8 +13,7 @@
           "extra": [
               {
                   "label": "UID",
-                  "api_key": "uid",
-                  "desc": "填入B站up主的UID，进去个人主页然后就可以找到了"
+                  "api_key": "uid"
               }
           ]
       },
@@ -59,8 +58,7 @@
           "extra": [
               {
                   "label": "URL",
-                  "api_key": "url",
-                  "desc": "填入网址，例如https://www.bv2008.cn/app/opp/list.php?tag=&area=2464&area2=2516&state=2&scope=&obj=&time_start=&time_end=&name=&members=&mode=list（这是一个选了沙河地区筛选条件的例子）"
+                  "api_key": "url"
               }
           ]
       },
