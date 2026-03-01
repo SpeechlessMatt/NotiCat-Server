@@ -19,9 +19,6 @@ import time
 import re
 
 class NuedcClient(BaseClient):
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def fetch(self):
         resp = self.session.get("https://www.nuedc-training.com.cn/index/news/index")
         noti_html = etree.HTML(resp.text)

@@ -110,9 +110,6 @@ def generate_html_body(title, date, url, dept="本科生院", category="校内�
 class CSUClient(BaseClient):
     client_id = "csu"
     
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def login(self):
         headers = {
             "Host": "oa.csu.edu.cn"

@@ -24,9 +24,6 @@ from .base import BaseClient
 class SaikrClient(BaseClient):
     client_id = "saikr"
 
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def fetch(self):
         headers = {"Origin": "https://www.saikr.com", "Referer": "https://www.saikr.com/"}
         resp = self.session.get("https://apiv4buffer.saikr.com/api/pc/contest/lists?page=1&limit=10&univs_id=&class_id=&level=0&sort=0", headers=headers)

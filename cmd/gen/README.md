@@ -1,8 +1,8 @@
 # 🐱 NotiCat Server
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.1.3-blue?style=for-the-badge" alt="version">
-  <img src="https://img.shields.io/badge/build-2026.02.28-green?style=for-the-badge" alt="build">
+  <img src="https://img.shields.io/badge/version-0.2.1-blue?style=for-the-badge" alt="version">
+  <img src="https://img.shields.io/badge/build-2026.03.1-green?style=for-the-badge" alt="build">
 </p>
 
 <p align="center">
@@ -74,8 +74,8 @@
 
 ## 服务信息
 
-- **版本**：`0.1.3`
-- **构建时间**：`2026-02-28`
+- **版本**：`0.2.1`
+- **构建时间**：`2026-03-1`
 - **维护者**：`edbinmatt`
 
 ---

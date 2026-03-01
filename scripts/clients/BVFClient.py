@@ -18,9 +18,6 @@ from lxml_html_clean import Cleaner
 import re
 
 class BVFClient(BaseClient):
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def fetch(self):
         self.logger.debug("Beijing Volunteer Federation client start...")
 

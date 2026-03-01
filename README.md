@@ -129,6 +129,20 @@ make gen
 
 - **extra**: 所需额外参数，传递给 Python 脚本
 
+## 👌 支持的客户端
+
+截止至 2026.3.1，已经支持6个网站的适配，本页面的更新不一定及时，查看更多适配情移步至[支持的clients](https://github.com/SpeechlessMatt/NotiCat-Server/blob/main/cmd/gen/README.md)
+
+| 平台名称 | 标识符 (ID) | 目标地址 (Endpoint) | 抓取策略 & 状态 | 详细介绍 |
+| :--- | :--- | :--- | :--- | :--- |
+| **Bilibili** | `bili` | [bilibili.com](https://www.bilibili.com) | `动态推送` `API` | 实时监控 UP 主动态，支持大航海、抽奖信息识别。 |
+| **赛氪网** | `saikr` | [saikr.com](https://www.saikr.com/) | `竞赛列表` `HTML` | 自动筛选各类学科竞赛、大学生志愿者招募信息。 |
+| **北邮门户** | `bupt` | [my.bupt.edu.cn](http://my.bupt.edu.cn) | `校内通知` `CAS` | 模拟 CAS 统一身份认证，抓取教务处及各学院公告。 |
+| **数学竞赛网** | `cmathc` | [cmathc.org.cn](https://www.cmathc.org.cn/) | `学术赛事` `HTML` | 针对数学建模、数学竞赛等专项赛事信息的深度采集。 |
+| **电赛培训网** | `nuedc` | [nuedc-training](https://www.nuedc-training.com.cn) | `培训资料` `Login` | 实时跟踪全国大学生电子设计竞赛相关通知与资源更新。 |
+| **志愿北京** | `bvf` | [bv2008.cn](https://www.bv2008.cn/) | `志愿项目` `Session` | 抓取最新志愿者岗位，支持多账号登录及 Cookie 持久化。 |
+| **中南大学** | `csu` | [oa.csu.edu.cn](https://oa.csu.edu.cn/con/ggtz) | `OA办公` `Public` | 解析 OA 系统公告列表，涵盖本科生院及研究生院公文。 |
+
 ## 🚀 添加新客户端
 
 扩展 NotiCat 以支持新网站非常简单，只需两步：
@@ -170,15 +184,16 @@ class ExampleClient(BaseClient):
     # 也可以自己定义，如下(取消注释) -> "example_show"
     # client_id = "example_show"
     
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-    
     def fetch(self) -> list:
         """实现抓取逻辑，返回消息列表"""
         # 您的抓取代码
         messages = []
         # ... 抓取逻辑
         return messages
+
+    def fetch_detail(self, url):
+        """实现抓取通知正文的逻辑"""
+        ...
 ```
 
 ### 步骤3：应用更改
@@ -297,11 +312,13 @@ go run main.go
 
 使用简称示例：`export NOTICAT_SMTP_SERVER="qq"` 或使用完整 URL：`export NOTICAT_SMTP_SERVER="smtps://smtp.qq.com:465"`
 
+不在此表中的 SMTP 服务器只是无法使用简称，只要正确实现了 SMTP 接口就可以使用完整 URL 配置 SMTP 服务器
+
 ---
 
 ## 🐳 使用 Docker 部署（可选）
 
-项目提供基于多阶段构建的 `Dockerfile` 和 `docker-compose.yml`，可以将整个服务（含 C++ 邮件模块与 Python 脚本）打包运行。
+项目提供基于多阶段构建的 `Dockerfile` 和 `docker-compose.yml`，可以将整个服务（含 C++ 邮件模块与 Python 脚本）打包运行。每次添加新的 Python Client（比如想要多适配一个网站）需要重新编译镜像，但是如果仅仅修改 Python Client（比如原有的 BiliClient ）则无需重新编译镜像
 
 快速示例：
 

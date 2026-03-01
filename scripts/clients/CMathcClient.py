@@ -20,9 +20,6 @@ import re
 class CMathcClient(BaseClient):
     client_id = "cmathc"
 
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def fetch(self):
         self.logger.debug("cmathc client start")
         resp = self.session.get("https://www.cmathc.org.cn/news/")

@@ -131,9 +131,6 @@ def jsonToResult(data: dict):
 class BilibiliClient(BaseClient):
     client_id = "bili"
 
-    def __init__(self, username, password, extra) -> None:
-        super().__init__(username=username, password=password, extra=extra)
-
     def login(self):
         return
 

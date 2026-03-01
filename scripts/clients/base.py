@@ -15,6 +15,7 @@
 from abc import ABCMeta
 from curl_cffi import requests
 import weakref
+import hashlib
 import re
 import pickle
 import os
@@ -56,7 +57,7 @@ class BaseClient(metaclass=ClientMeta):
         self.username = username
         self.password = password
         self.extra = extra
-        self.cookie_path = os.path.join(cookie_dir, f"{self.name}_{username}.pkl")
+        self.cookie_path = os.path.join(cookie_dir, f"{self.name}_{username}_{hashlib.sha256(password.encode('utf-8')).hexdigest()}.pkl")
         self.session = requests.Session(impersonate="chrome131")
         self._finalizer = weakref.finalize(self, self.session.close)
 
