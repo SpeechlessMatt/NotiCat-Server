@@ -177,7 +177,7 @@ class CSUClient(BaseClient):
             resp = self.session.get("https://oa.csu.edu.cn/con/ggtz", headers=headers)
 
             # self.logger.debug(resp.text)
-            return resp.status_code == 200
+            return resp.url == "https://oa.csu.edu.cn/con/ggtz"
         except Exception:
             return False
 
