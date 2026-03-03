@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"regexp"
 	"strings"
+	"fmt"
 )
 
 func ParseJSONString(data string) (any, error) {
@@ -35,7 +36,7 @@ func NormalizeJSON(m map[string]any) string {
 func ShortenTitle(s string) string {
 	cleanText := strings.NewReplacer("\n", "", "\r", "").Replace(s)
 	runes := []rune(cleanText)
-	limit := min(20, len(runes))
+	limit := min(50, len(runes))
 	return string(runes[:limit])
 }
 
@@ -78,4 +79,13 @@ func (f *StringFilter) Match(input string) bool {
 		return strings.Contains(strings.ToLower(input), strings.ToLower(f.Pattern))
 	}
 	return strings.Contains(input, f.Pattern)
+}
+
+func NoticatExtraInfo(content string, client string) string {
+	extra := fmt.Sprintf(
+		"<br><hr style='border:none;border-top:1px solid #eee;margin-top:20px;'>"+
+		"<p style='color:#888;font-size:12px;'>@NotiCat-%s</p>", 
+		client,
+	)
+	return content + extra
 }
