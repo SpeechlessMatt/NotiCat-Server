@@ -202,7 +202,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		authHeader := c.GetHeader("Authorization")
 
 		if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "log in first (missing Bearer token)!"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "未登录"})
 			c.Abort()
 			return
 		}
@@ -210,7 +210,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		tokenString := authHeader[7:]
 
 		if tokenString == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "login first!"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "登录失效，请重新登录"})
 			c.Abort()
 			return
 		}
@@ -223,7 +223,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "erro Auth"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "登录失效，请重新登录"})
 			c.Abort()
 			return
 		}
@@ -233,7 +233,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		var user model.User
 		if err := global.DB.First(&user, userID).Error; err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "user does not exist or has been deleted"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "用户不存在"})
 			c.Abort()
 			return
 		}
