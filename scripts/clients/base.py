@@ -96,6 +96,7 @@ class BaseClient(metaclass=ClientMeta):
             self.logger.info("Skip Login.")
         else:
             self.logger.info("Session out of date, ready for login...")
+            self.session.cookies.clear()
             self.login()
 
     def isLogin(self) -> bool:

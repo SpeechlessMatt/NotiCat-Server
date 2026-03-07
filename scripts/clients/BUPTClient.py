@@ -85,9 +85,19 @@ class BUPTClient(BaseClient):
 
     def isLogin(self) -> bool:
         try:
-            resp = self.session.get("http://my.bupt.edu.cn/")
-            return resp.status_code == 200
-        except Exception:
+            headers = {
+                "Host": "my.bupt.edu.cn",
+                "Referer": "http://my.bupt.edu.cn/xs_index.jsp?urltype=tree.TreeTempUrl&wbtreeid=1541"
+            }
+
+            resp = self.session.get("http://my.bupt.edu.cn/system/resource/app/cuser/getwxtsA.jsp", headers=headers)
+            data = resp.json()
+            if data.get("a"):
+                return True
+            return False
+
+        except Exception as e:
+            self.logger.debug(f"exception: {e}")
             return False
 
     def fetch(self):
