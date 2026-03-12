@@ -34,10 +34,19 @@ func RegisterRoutes(r *gin.Engine, baseDir string) {
 		c.Data(http.StatusOK, "application/json; charset=utf-8", data)
 	})
 
-	r.GET("readme", func(c *gin.Context) {
-		md, err := os.ReadFile(filepath.Join(baseDir, "README.md"))
+	r.GET("icon", func(c *gin.Context) {
+		imagePath := filepath.Join(baseDir, "icon.png")
+		if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+    	    c.AbortWithStatus(http.StatusNotFound)
+        return
+    }
+		c.File(imagePath)
+	})
+
+	r.GET("clients", func(c *gin.Context) {
+		md, err := os.ReadFile(filepath.Join(baseDir, "CLIENTS.md"))
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "README not available"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "CLIENTS not available"})
 			return
 		}
 

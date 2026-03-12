@@ -1,7 +1,7 @@
 {
     "name": "NotiCat Server (Main)",
     "version": "0.2.1",
-    "build_time": "2026-03-01T13:16:44+08:00",
+    "build_time": "2026-03-11T21:41:08+08:00",
     "owner": "edbinmatt",
     "description": "Notification bridge server",
     "support_clients": [
