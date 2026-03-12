@@ -26,11 +26,11 @@ class BUPTClient(BaseClient):
         resp = self.session.get("http://my.bupt.edu.cn")
         assert resp.status_code == 200, "server error!"
 
-        href = re.search(r'<script>window.location.href="(.*?)"</script>', resp.text).group(1)
-        jump_url = f"http://my.bupt.edu.cn/{href}"
-
-        resp = self.session.get(jump_url)
-        assert resp.status_code == 200, "server error!"
+        # href = re.search(r'<script>window.location.href="(.*?)"</script>', resp.text).group(1)
+        # jump_url = f"http://my.bupt.edu.cn/{href}"
+        #
+        # resp = self.session.get(jump_url)
+        # assert resp.status_code == 200, "server error!"
 
         login_html = etree.HTML(resp.text)
 
